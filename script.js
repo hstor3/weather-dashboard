@@ -10,12 +10,6 @@ $(document).ready(function () {
         let recent = $('<li>').text(searches[i]);
         
         $('.citySearch').append(recent);
-
-           //         //  const element = array[i];
-            // let citySearched = document.createElement('li');
-            // let text = `${searches[i]['city']}`
-            // citySearched.appendChild(document.createTextNode(text));
-            // cities.appendChild(citySearched)
         
         // get div to attatch city to
         // append click funtion to div
@@ -44,6 +38,7 @@ $(document).ready(function () {
                 let icon = $('<img>').attr('src', 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png')
 
                 $('.outputContainer').attr('style', 'border: 2px solid black ; border-radius: 5px');
+                $('.cityOutput').empty();
                 $('.cityOutput').append(cityElement.append(icon), tempElement, humidElement, windElement);
 
                 get5day(data.coord.lat, data.coord.lon)
@@ -51,20 +46,20 @@ $(document).ready(function () {
 
         console.log(requestUrl);
     }
-
-    fetchBtn.addEventListener('click', function () {
+    
+    fetchBtn.addEventListener('click', function() {
         let city = $('.input-box').val().trim()
         console.log(city);
         getApi(city);
-
+        
         searches = JSON.parse(localStorage.getItem('searches') || '[]');
         searches.push(city)
         localStorage.setItem('searches', JSON.stringify(searches));
-
-        let recent = $('<li>').text(city);
         
+        let recent = $('<li>').text(city);
         $('.citySearch').append(recent);
     });
+
 
     function get5day(lat, lon) {
         let requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=adc7a83ef96c3c42fac6aa52f1b098b1&units=imperial`
@@ -78,6 +73,7 @@ $(document).ready(function () {
                 console.log(data);
 
                 let uvElement = $('<h2>').text(Math.round(data.current.uvi) + ' uv');
+                $('.daysForecast').empty();
                 $('.cityOutput').append(uvElement);
 
                 for (let i = 0; i < 5; i++) {
