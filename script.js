@@ -1,22 +1,34 @@
 $(document).ready(function () {
     searchHistory();
-    
+
     function searchHistory() {
         searches = JSON.parse(localStorage.getItem('searches') || '[]');
-        
+
         for (let i = 0; i < searches.length; i++) {
             //  = city[i];
-            
-        let recent = $('<li>').text(searches[i]);
-        
-        $('.citySearch').append(recent);
-        
-        // get div to attatch city to
-        // append click funtion to div
-        // add to search box and make them clickable
+
+            let recent = $('<li class="city">').text(searches[i]);
+
+            $('.citySearch').append(recent);
+
+            // get div to attatch city to
+            // append click funtion to div
+            // add to search box and make them clickable
+        }
     }
-}
-    
+
+    $(".city").on('click', function (event) {
+        console.log(event.target.outerText)    
+        // let city = event.text
+        console.log(event)
+        getApi(event.target.outerText);
+        // get5day();
+    })
+
+    // function cityClicks() {
+
+    // } 
+
     // let cityOutput = document.getElementById('citySearch');
     let fetchBtn = document.getElementById('search-btn');
 
@@ -46,18 +58,23 @@ $(document).ready(function () {
 
         console.log(requestUrl);
     }
-    
-    fetchBtn.addEventListener('click', function() {
+
+    fetchBtn.addEventListener('click', function () {
         let city = $('.input-box').val().trim()
         console.log(city);
         getApi(city);
-        
+
         searches = JSON.parse(localStorage.getItem('searches') || '[]');
-        searches.push(city)
+        console.log(searches.includes(city))
+        if (!searches.includes(city)) {
+
+            searches.push(city)
+
+            let recent = $('<li>').text(city);
+            $('.citySearch').append(recent);
+        }
         localStorage.setItem('searches', JSON.stringify(searches));
-        
-        let recent = $('<li>').text(city);
-        $('.citySearch').append(recent);
+
     });
 
 
@@ -72,9 +89,27 @@ $(document).ready(function () {
             .then(function (data) {
                 console.log(data);
 
-                let uvElement = $('<h2>').text(Math.round(data.current.uvi) + ' uv');
-                $('.daysForecast').empty();
+                let uvNumb = Math.round(data.current.uvi)
+                let uvElement = $('<h2>').text(uvNumb + ' uv');
+                let square = $('<div>');
+                uvElement.append(square);
+
                 $('.cityOutput').append(uvElement);
+
+                if (uvNumb <= 2 || uvNumb >= 0) {
+                    square.addClass('green')
+                } else if (uvNumb <= 5 || uvNumb >= 3) {
+                    square.addClass('yellow')
+                } else if (uvNumb <= 7 || uvNumb >= 6) {
+                    square.addClass('orange')
+                } else if (uvNumb <= 10 || uvNumb >= 8) {
+                    square.addClass('red')
+                } else {
+                    square.addClass('purple')
+                }
+                // else if (uvElement <=)
+                console.log(uvElement)
+                $('.weatherOutput').empty();
 
                 for (let i = 0; i < 5; i++) {
                     // let futureWeather = (data.daily[i]);
@@ -89,8 +124,8 @@ $(document).ready(function () {
                     let futureTemp = $('<h3>').text('Temp: ' + (Math.round(data.daily[i].temp.day)) + String.fromCharCode(176));
                     let futureHumid = $('<h3>').text('Humidity: ' + (data.daily[i].humidity) + '%');
 
-                    $('.weatherOutput').attr('style', 'border: 2px solid black ; border-radius: 5px');
-                    $('.daysForecast').append(futureTemp.append(futureIcon), futureHumid);
+                    $('.outputContain').attr('style', 'border: 2px solid black ; border-radius: 5px');
+                    $('.weatherOutput').append(futureTemp.append(futureIcon), futureHumid);
 
 
                 }
