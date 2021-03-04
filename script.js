@@ -1,9 +1,29 @@
-// local storage stuff last
-
 $(document).ready(function () {
+    searchHistory();
+    
+    function searchHistory() {
+        searches = JSON.parse(localStorage.getItem('searches') || '[]');
+        
+        for (let i = 0; i < searches.length; i++) {
+            //  = city[i];
+            
+        let recent = $('<li>').text(searches[i]);
+        
+        $('.citySearch').append(recent);
 
-
-    let cityOutput = document.getElementById('citySearch');
+           //         //  const element = array[i];
+            // let citySearched = document.createElement('li');
+            // let text = `${searches[i]['city']}`
+            // citySearched.appendChild(document.createTextNode(text));
+            // cities.appendChild(citySearched)
+        
+        // get div to attatch city to
+        // append click funtion to div
+        // add to search box and make them clickable
+    }
+}
+    
+    // let cityOutput = document.getElementById('citySearch');
     let fetchBtn = document.getElementById('search-btn');
 
     function getApi(name) {
@@ -26,17 +46,6 @@ $(document).ready(function () {
                 $('.outputContainer').attr('style', 'border: 2px solid black ; border-radius: 5px');
                 $('.cityOutput').append(cityElement.append(icon), tempElement, humidElement, windElement);
 
-                // for (let i = 0; i < data.length; i++) {
-                //     // let newLi = document.createElement()
-                //     let city = document.createElement('li');
-                //     // let ulItem = document.getElementById()
-
-                //     city.textContent = data[i].html_url;
-                //     city.href = data[i].html_url;
-
-                //     cityOutput.appendChild(city);
-
-
                 get5day(data.coord.lat, data.coord.lon)
             });
 
@@ -46,7 +55,15 @@ $(document).ready(function () {
     fetchBtn.addEventListener('click', function () {
         let city = $('.input-box').val().trim()
         console.log(city);
-        getApi(city)
+        getApi(city);
+
+        searches = JSON.parse(localStorage.getItem('searches') || '[]');
+        searches.push(city)
+        localStorage.setItem('searches', JSON.stringify(searches));
+
+        let recent = $('<li>').text(city);
+        
+        $('.citySearch').append(recent);
     });
 
     function get5day(lat, lon) {
@@ -65,14 +82,24 @@ $(document).ready(function () {
 
                 for (let i = 0; i < 5; i++) {
                     // let futureWeather = (data.daily[i]);
-                    
+                    // let DateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(data.daily[i].dt);
+                    // let fiveDayDate = $('<h3>').text(data.daily[i].dt);
+                    // DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(fiveDayDate);
+                    // let fiveDayDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, (data.daily[i].dt))); 
+                    // DateTimeKind.Utc);
+                    // DateTime time = startDate.AddSeconds(data.daily[i].{dt});
+
                     let futureIcon = $('<img>').attr('src', 'http://openweathermap.org/img/w/' + data.daily[i].weather[0].icon + '.png');
                     let futureTemp = $('<h3>').text('Temp: ' + (Math.round(data.daily[i].temp.day)) + String.fromCharCode(176));
-                    let futureHumid = $('<h3>').text('Humidity: ' + (data.daily[i].humidity) + '%')
-                    
+                    let futureHumid = $('<h3>').text('Humidity: ' + (data.daily[i].humidity) + '%');
+
                     $('.weatherOutput').attr('style', 'border: 2px solid black ; border-radius: 5px');
                     $('.daysForecast').append(futureTemp.append(futureIcon), futureHumid);
+
+
                 }
+                // savedSearches();
             })
     }
+
 })
