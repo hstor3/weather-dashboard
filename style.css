@@ -3,8 +3,6 @@ body {
     position: relative;
 }
 
-/* .pageTitle */
-
 main {
     padding: 1vw;
 }
@@ -12,7 +10,6 @@ main {
 .header {
     background-color: rgba(0, 0, 0, 0.829);
     padding: 2vw;
-    /* margin: auto; */
 }
 
 .searchSection {
@@ -21,12 +18,9 @@ main {
     width: 37%;
     font-weight: bold;
     box-sizing: border-box;
-    /* width: 50%; */
     border: 2px solid black;
     padding: 1vw;
     margin: 1vw;
-    /* float: left; */
-    /* padding-bottom: 1vw; */
 }
 
 .input-box {
@@ -38,74 +32,54 @@ main {
 
 .search-btn {
     border-radius: 5px;
-    /* width: 7%; */
-    /* height: 7%; */
 }
 
-/* .fas { */
-    /* width: 7%; */
-/* } */
+.city {
+    transition: all .2s ease;
+}
 
-/* .search-btn:hover { */
-
-/* } */
+.city:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+}
 
 .pageTitle {
     color: white;
-    /* margin-right: auto; */
-    /* margin-left: auto; */
 }
 
 .citySearch {
     box-sizing: border-box;
-    /* width: 96%; */
     border: 1px solid black;
     float: top left;
     height: 200px;
     border-radius: 5px;
+    background-color: white;
 }
 
 .outputContainer {
-    /* border-radius: 5px; */
-    /* box-sizing: border-box; */
     width: 57%;
-    /* border: 2px solid black; */
     float: right;
     padding: 1vw;
     margin: 1vw;
 }
 
-.cityOutput {
-    /* border-radius: 5px; */
-    /* box-sizing: border-box; */
-    /* width: 96%; */
-    /* border: 1px solid black; */
-    /* float: left; */
-    /* margin-bottom: 2vw; */
-    /* position: relative; */
-    /* height: 200px; */
-    /* margin: auto; */
-    /* margin: 1vw; */
-}
+
 
 .outputContain {
-    /* float: inline-end; */
-    /* position: absolute; */
-    width: 90%;
+    width: 70%;
+    height: 25%;
+    margin-top: 30vw;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .weatherOutput {
-    /* border-radius: 5px; */
-    /* box-sizing: border-box; */
-    /* width: 96%; */
-    /* border: 1px solid black; */
-    /* float: ; */
-    /* position: relative; */
-    /* height: 200px; */
-    /* margin: 1vw; */
-    /* padding: 1vw; */
+    background-color: white;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
+/* colors for the uv square */
 .green {
     height: 1.5vw;
     width: 1.5vw;
@@ -134,4 +108,8 @@ main {
     height: 1.5vw;
     width: 1.5vw;
     background-color: rgb(66, 0, 128);
+}
+
+.date {
+    font-weight: bold;
 }
