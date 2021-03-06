@@ -17,7 +17,7 @@ For the JavaScript file, I mainly used jquery. I started by creating an onload f
 
 ## Deployed Link
 
-
+https://hstor3.github.io/weather-dashboard/
 
 ## Screenshot 
 
